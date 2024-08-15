@@ -1,3 +1,4 @@
+using System.Net.Mail;
 using AspireStarter.Web;
 using AspireStarter.Web.Components;
 
@@ -16,6 +17,15 @@ builder.Services.AddHttpClient<WeatherApiClient>(client =>
     // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
     // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
     client.BaseAddress = new("https+http://apiservice");
+});
+
+builder.Services.AddSingleton<SmtpClient>(sp =>
+{
+    var smtpUri = new Uri(builder.Configuration.GetConnectionString("maildev")!);
+
+    var smtpClient = new SmtpClient(smtpUri.Host, smtpUri.Port);
+
+    return smtpClient;
 });
 
 var app = builder.Build();

@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireStarter.ApiService", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireStarter.Web", "AspireStarter\AspireStarter.Web\AspireStarter.Web.csproj", "{235E1FD2-D22F-40B8-A8B6-9DA9ADBFAEE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailDev.Hosting", "MailDev.Hosting\MailDev.Hosting.csproj", "{4E27EB88-8196-4916-8795-FE57D5639ACD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailDev.Client.MailKit", "MailDev.Client.MailKit\MailDev.Client.MailKit.csproj", "{DEDC0476-0C6E-448E-81DA-5508BB98B704}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{235E1FD2-D22F-40B8-A8B6-9DA9ADBFAEE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{235E1FD2-D22F-40B8-A8B6-9DA9ADBFAEE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{235E1FD2-D22F-40B8-A8B6-9DA9ADBFAEE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E27EB88-8196-4916-8795-FE57D5639ACD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E27EB88-8196-4916-8795-FE57D5639ACD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E27EB88-8196-4916-8795-FE57D5639ACD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E27EB88-8196-4916-8795-FE57D5639ACD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEDC0476-0C6E-448E-81DA-5508BB98B704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEDC0476-0C6E-448E-81DA-5508BB98B704}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEDC0476-0C6E-448E-81DA-5508BB98B704}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEDC0476-0C6E-448E-81DA-5508BB98B704}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

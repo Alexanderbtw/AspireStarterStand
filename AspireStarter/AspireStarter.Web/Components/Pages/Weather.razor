@@ -1,23 +1,30 @@
 ﻿@page "/weather"
+@using System.Net.Mail
 @attribute [StreamRendering(true)]
 @attribute [OutputCache(Duration = 5)]
+@rendermode InteractiveServer
 
 @inject WeatherApiClient WeatherApi
+@inject SmtpClient smtpClient
 
 <PageTitle>Weather</PageTitle>
 
 <h1>Weather</h1>
 
-<p>This component demonstrates showing data loaded from a backend API service.</p>
+<p>You can sign up for severe weather warnings!</p>
+<button
+        class="btn @(isSubscribed ? "btn-danger" : "btn-primary")"
+        @onclick="ToggleSubscribe"
+    >
+        @(isSubscribed ? "Unsubscribe" : "Subscribe")
+</button>
 
-@if (forecasts == null)
-{
+@if (forecasts == null) {
     <p>
         <em>Loading...</em>
     </p>
 }
-else
-{
+else {
     <table class="table">
         <thead>
         <tr>
@@ -28,8 +35,7 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach (var forecast in forecasts)
-        {
+        @foreach (var forecast in forecasts) {
             <tr>
                 <td>@forecast.Date.ToShortDateString()</td>
                 <td>@forecast.TemperatureC</td>
@@ -43,10 +49,27 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
+    private bool isSubscribed = false;
 
-    protected override async Task OnInitializedAsync()
-    {
+    protected override async Task OnInitializedAsync() {
         forecasts = await WeatherApi.GetWeatherAsync();
+    }
+
+    private async Task ToggleSubscribe() {
+        isSubscribed = !isSubscribed;
+
+        using var message = new MailMessage("newsletter@yourcompany.com", "useremail@gmail.com");
+        if (isSubscribed) {
+            message.Subject = "Welcome to our newsletter!";
+            message.Body = "Thank you for subscribing to our newsletter!";
+        }
+        else {
+            message.Subject = "You are unsubscribed from our newsletter!";
+            message.Body = "Sorry to see you go. We hope you will come back soon!";
+        }
+
+
+        await smtpClient.SendMailAsync(message);
     }
 
 }
