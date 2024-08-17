@@ -1,6 +1,6 @@
-using System.Net.Mail;
 using AspireStarter.Web;
 using AspireStarter.Web.Components;
+using MailDev.Client.MailKit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,14 +19,7 @@ builder.Services.AddHttpClient<WeatherApiClient>(client =>
     client.BaseAddress = new("https+http://apiservice");
 });
 
-builder.Services.AddSingleton<SmtpClient>(sp =>
-{
-    var smtpUri = new Uri(builder.Configuration.GetConnectionString("maildev")!);
-
-    var smtpClient = new SmtpClient(smtpUri.Host, smtpUri.Port);
-
-    return smtpClient;
-});
+builder.AddMailKitClient("maildev");
 
 var app = builder.Build();
 

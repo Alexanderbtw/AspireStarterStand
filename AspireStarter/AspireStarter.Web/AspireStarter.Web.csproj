@@ -7,11 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\MailDev.Client.MailKit\MailDev.Client.MailKit.csproj" />
         <ProjectReference Include="..\AspireStarter.ServiceDefaults\AspireStarter.ServiceDefaults.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Aspire.StackExchange.Redis.OutputCaching" Version="8.1.0" />
+        <PackageReference Include="MimeKit" Version="4.7.0" />
     </ItemGroup>
 
 </Project>

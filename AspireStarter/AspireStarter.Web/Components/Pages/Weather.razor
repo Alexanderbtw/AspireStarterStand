@@ -1,11 +1,13 @@
 ﻿@page "/weather"
 @using System.Net.Mail
+@using MailDev.Client.MailKit
+@using MimeKit
 @attribute [StreamRendering(true)]
 @attribute [OutputCache(Duration = 5)]
 @rendermode InteractiveServer
 
 @inject WeatherApiClient WeatherApi
-@inject SmtpClient smtpClient
+@inject MailKitClientFactory MailKitFactory
 
 <PageTitle>Weather</PageTitle>
 
@@ -57,6 +59,7 @@ else {
 
     private async Task ToggleSubscribe() {
         isSubscribed = !isSubscribed;
+        var smtpClient = await MailKitFactory.GetSmtpClientAsync();
 
         using var message = new MailMessage("newsletter@yourcompany.com", "useremail@gmail.com");
         if (isSubscribed) {
@@ -68,8 +71,7 @@ else {
             message.Body = "Sorry to see you go. We hope you will come back soon!";
         }
 
-
-        await smtpClient.SendMailAsync(message);
+        await smtpClient.SendAsync(MimeMessage.CreateFromMailMessage(message));
     }
 
 }

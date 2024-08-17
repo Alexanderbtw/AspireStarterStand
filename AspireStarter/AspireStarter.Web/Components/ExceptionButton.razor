@@ -1,0 +1,8 @@
+@rendermode InteractiveServer
+
+<button class="btn btn-danger" @onclick="ThrowExceptionExample">Throw Exception</button>
+
+@code
+{
+    private static void ThrowExceptionExample() => throw new Exception("I'm exception, hi-hi");
+}
