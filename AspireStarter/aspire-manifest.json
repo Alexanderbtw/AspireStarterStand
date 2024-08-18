@@ -1,6 +1,36 @@
 {
   "$schema": "https://json.schemastore.org/aspire-8.0.json",
   "resources": {
+    "parameterName": {
+      "type": "parameter.v0",
+      "value": "{parameterName.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "secretParameterName": {
+      "type": "parameter.v0",
+      "value": "{secretParameterName.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string",
+          "secret": true
+        }
+      }
+    },
+    "mssql": {
+      "type": "parameter.v0",
+      "connectionString": "{mssql.value}",
+      "value": "{mssql.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string",
+          "secret": true
+        }
+      }
+    },
     "cache": {
       "type": "container.v0",
       "connectionString": "{cache.bindings.tcp.host}:{cache.bindings.tcp.port}",
@@ -14,6 +44,25 @@
         }
       }
     },
+    "maildev": {
+      "type": "container.v0",
+      "connectionString": "smtp://{maildev.bindings.smtp.host}:{maildev.bindings.smtp.port}",
+      "image": "docker.io/maildev/maildev:2.0.2",
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http",
+          "targetPort": 1080
+        },
+        "smtp": {
+          "scheme": "tcp",
+          "protocol": "tcp",
+          "transport": "tcp",
+          "targetPort": 1025
+        }
+      }
+    },
     "apiservice": {
       "type": "project.v0",
       "path": "AspireStarter.ApiService/AspireStarter.ApiService.csproj",
@@ -22,7 +71,10 @@
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
         "ASPNETCORE_FORWARDEDHEADERS_ENABLED": "true",
-        "HTTP_PORTS": "{apiservice.bindings.http.targetPort}"
+        "HTTP_PORTS": "{apiservice.bindings.http.targetPort}",
+        "MY_PARAMETER": "{parameterName.value}",
+        "MY_SECRET_PARAMETER": "{secretParameterName.value}",
+        "ConnectionStrings__mssql": "{mssql.connectionString}"
       },
       "bindings": {
         "http": {
@@ -48,7 +100,8 @@
         "HTTP_PORTS": "{webfrontend.bindings.http.targetPort}",
         "ConnectionStrings__cache": "{cache.connectionString}",
         "services__apiservice__http__0": "{apiservice.bindings.http.url}",
-        "services__apiservice__https__0": "{apiservice.bindings.https.url}"
+        "services__apiservice__https__0": "{apiservice.bindings.https.url}",
+        "ConnectionStrings__maildev": "{maildev.connectionString}"
       },
       "bindings": {
         "http": {

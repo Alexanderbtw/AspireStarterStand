@@ -1,25 +1,15 @@
 ﻿@page "/weather"
-@using System.Net.Mail
-@using MailDev.Client.MailKit
-@using MimeKit
 @attribute [StreamRendering(true)]
 @attribute [OutputCache(Duration = 5)]
-@rendermode InteractiveServer
 
 @inject WeatherApiClient WeatherApi
-@inject MailKitClientFactory MailKitFactory
 
 <PageTitle>Weather</PageTitle>
 
 <h1>Weather</h1>
 
 <p>You can sign up for severe weather warnings!</p>
-<button
-        class="btn @(isSubscribed ? "btn-danger" : "btn-primary")"
-        @onclick="ToggleSubscribe"
-    >
-        @(isSubscribed ? "Unsubscribe" : "Subscribe")
-</button>
+<SubscribeButton/>
 
 @if (forecasts == null) {
     <p>
@@ -51,27 +41,8 @@ else {
 
 @code {
     private WeatherForecast[]? forecasts;
-    private bool isSubscribed = false;
 
     protected override async Task OnInitializedAsync() {
         forecasts = await WeatherApi.GetWeatherAsync();
     }
-
-    private async Task ToggleSubscribe() {
-        isSubscribed = !isSubscribed;
-        var smtpClient = await MailKitFactory.GetSmtpClientAsync();
-
-        using var message = new MailMessage("newsletter@yourcompany.com", "useremail@gmail.com");
-        if (isSubscribed) {
-            message.Subject = "Welcome to our newsletter!";
-            message.Body = "Thank you for subscribing to our newsletter!";
-        }
-        else {
-            message.Subject = "You are unsubscribed from our newsletter!";
-            message.Body = "Sorry to see you go. We hope you will come back soon!";
-        }
-
-        await smtpClient.SendAsync(MimeMessage.CreateFromMailMessage(message));
-    }
-
 }

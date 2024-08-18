@@ -10,9 +10,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\MailDev.Client.MailKit\MailDev.Client.MailKit.csproj" />
         <ProjectReference Include="..\..\MailDev.Hosting\MailDev.Hosting.csproj" IsAspireProjectResource="false" />
-        <ProjectReference Include="..\AspireStarter.ApiService\AspireStarter.ApiService.csproj"/>
-        <ProjectReference Include="..\AspireStarter.Web\AspireStarter.Web.csproj"/>
+        <ProjectReference Include="..\AspireStarter.ApiService\AspireStarter.ApiService.csproj" />
+        <ProjectReference Include="..\AspireStarter.Web\AspireStarter.Web.csproj" />
     </ItemGroup>
 
     <ItemGroup>
