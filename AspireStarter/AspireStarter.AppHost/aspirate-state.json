@@ -1,0 +1,38 @@
+{
+  "projectPath": ".",
+  "outputPath": "aspirate-output",
+  "containerImageTags": [
+    "latest"
+  ],
+  "containerBuilder": "docker",
+  "outputFormat": "compose",
+  "privateRegistryEmail": "aspir8@aka.ms",
+  "includeDashboard": false,
+  "secrets": {
+    "salt": "tAyksiEQ2QlDaREr",
+    "hash": "cIVp6Jn1hdpT8mQVHCJce3HR3e2Uv\u002BBfvC7h5jX9wQo=",
+    "secrets": {
+      "parameterName": {
+        "value": "tAyksiEQ2QlDaRErkgFftVtz2olduHFnyhj2niSm3/GMgrqyqcAZcI8eg9c3mh1R//Zarg=="
+      },
+      "secretParameterName": {
+        "value": "tAyksiEQ2QlDaRErDGynlKkDby5sMCjmsDycZBq6/fCZn5iyr8Qk"
+      },
+      "mssql": {
+        "value": "tAyksiEQ2QlDaRErjgxEB6a3oInDn1oMdIIumQSs7fOQqKe9nPY5"
+      },
+      "cache": {},
+      "maildev": {},
+      "apiservice": {
+        "ConnectionStrings__mssql": "tAyksiEQ2QlDaRErjgxEB6a3oInDn1oMdIIumQSs7fOQqKe9nPY5"
+      },
+      "webfrontend": {
+        "ConnectionStrings__cache": "tAyksiEQ2QlDaRErC1QBgssQgifXkgWoYaMfdwq\u002B/eqZ0f7g6pw=",
+        "ConnectionStrings__maildev": "tAyksiEQ2QlDaRErqxyKM6bsulmzRmIzAPM9wRqy6vLGxOe\u002BvMwldZgJ1INzzVo="
+      },
+      "collector": {},
+      "jaeger": {}
+    }
+  },
+  "processAllComponents": true
+}

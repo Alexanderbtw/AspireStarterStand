@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collector
+  labels:
+    app: collector
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: collector
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: collector
+    spec:
+      containers:
+      - name: collector
+        image: otel/opentelemetry-collector-contrib:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: otlp
+          containerPort: 4317
+      terminationGracePeriodSeconds: 180

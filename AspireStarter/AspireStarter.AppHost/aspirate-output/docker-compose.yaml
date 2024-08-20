@@ -1,0 +1,78 @@
+services:
+  cache:
+    container_name: "cache"
+    image: "docker.io/library/redis:7.2"
+    ports:
+    - target: 6379
+      published: 6379
+    restart: unless-stopped
+  maildev:
+    container_name: "maildev"
+    image: "docker.io/maildev/maildev:2.0.2"
+    ports:
+    - target: 1080
+      published: 1080
+    - target: 1025
+      published: 1025
+    restart: unless-stopped
+  apiservice:
+    container_name: "apiservice"
+    image: "apiservice:latest"
+    environment:
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: "in_memory"
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      HTTP_PORTS: "8080"
+      MY_PARAMETER: "MyAspirateParameterValue"
+      MY_SECRET_PARAMETER: "secretParam"
+      ConnectionStrings__mssql: "mssqlConASp"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4317"
+    ports:
+    - target: 8080
+      published: 10000
+    - target: 8443
+      published: 10001
+    restart: unless-stopped
+  webfrontend:
+    container_name: "webfrontend"
+    image: "webfrontend:latest"
+    environment:
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
+      OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY: "in_memory"
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      HTTP_PORTS: "8080"
+      ConnectionStrings__cache: "cache:6379"
+      services__apiservice__http__0: "http://apiservice:8080"
+      ConnectionStrings__maildev: "smtp://maildev:1025"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4317"
+    ports:
+    - target: 8080
+      published: 10002
+    - target: 8443
+      published: 10003
+    restart: unless-stopped
+  collector:
+    container_name: "collector"
+    image: "otel/opentelemetry-collector-contrib:latest"
+    ports:
+    - target: 55679
+      published: 55679
+    - target: 4317
+      published: 4317
+    volumes:
+    - type: bind
+      source: "../configs/otel-collector.yaml"
+      target: "/etc/otel-collector.yaml"
+    command:
+    - "--config"
+    - "/etc/otel-collector.yaml"
+    restart: unless-stopped
+  jaeger:
+    container_name: "jaeger"
+    image: "jaegertracing/all-in-one:latest"
+    ports:
+    - target: 16686
+      published: 16686
+    restart: unless-stopped

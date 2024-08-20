@@ -1,0 +1,12 @@
+resources:
+- cache
+- maildev
+- apiservice
+- webfrontend
+- collector
+- jaeger
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+

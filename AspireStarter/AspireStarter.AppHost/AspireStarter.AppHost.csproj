@@ -10,7 +10,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\MailDev.Client.MailKit\MailDev.Client.MailKit.csproj" />
         <ProjectReference Include="..\..\MailDev.Hosting\MailDev.Hosting.csproj" IsAspireProjectResource="false" />
         <ProjectReference Include="..\AspireStarter.ApiService\AspireStarter.ApiService.csproj" />
         <ProjectReference Include="..\AspireStarter.Web\AspireStarter.Web.csproj" />
@@ -18,6 +17,7 @@
 
     <ItemGroup>
         <PackageReference Include="Aspire.Hosting.AppHost" Version="8.1.0" />
+        <PackageReference Include="Aspire.Hosting.NodeJs" Version="8.1.0" />
         <PackageReference Include="Aspire.Hosting.Redis" Version="8.1.0" />
     </ItemGroup>
 

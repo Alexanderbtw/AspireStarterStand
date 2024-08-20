@@ -65,7 +65,7 @@
     },
     "apiservice": {
       "type": "project.v0",
-      "path": "AspireStarter.ApiService/AspireStarter.ApiService.csproj",
+      "path": "../AspireStarter.ApiService/AspireStarter.ApiService.csproj",
       "env": {
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
@@ -74,7 +74,8 @@
         "HTTP_PORTS": "{apiservice.bindings.http.targetPort}",
         "MY_PARAMETER": "{parameterName.value}",
         "MY_SECRET_PARAMETER": "{secretParameterName.value}",
-        "ConnectionStrings__mssql": "{mssql.connectionString}"
+        "ConnectionStrings__mssql": "{mssql.connectionString}",
+        "OTEL_EXPORTER_OTLP_ENDPOINT": "{collector.bindings.http.url}"
       },
       "bindings": {
         "http": {
@@ -91,7 +92,7 @@
     },
     "webfrontend": {
       "type": "project.v0",
-      "path": "AspireStarter.Web/AspireStarter.Web.csproj",
+      "path": "../AspireStarter.Web/AspireStarter.Web.csproj",
       "env": {
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
@@ -101,7 +102,8 @@
         "ConnectionStrings__cache": "{cache.connectionString}",
         "services__apiservice__http__0": "{apiservice.bindings.http.url}",
         "services__apiservice__https__0": "{apiservice.bindings.https.url}",
-        "ConnectionStrings__maildev": "{maildev.connectionString}"
+        "ConnectionStrings__maildev": "{maildev.connectionString}",
+        "OTEL_EXPORTER_OTLP_ENDPOINT": "{collector.bindings.http.url}"
       },
       "bindings": {
         "http": {
@@ -114,6 +116,50 @@
           "scheme": "https",
           "protocol": "tcp",
           "transport": "http",
+          "external": true
+        }
+      }
+    },
+    "collector": {
+      "type": "container.v0",
+      "image": "otel/opentelemetry-collector-contrib:latest",
+      "args": [
+        "--config",
+        "/etc/otel-collector.yaml"
+      ],
+      "bindMounts": [
+        {
+          "source": "configs/otel-collector.yaml",
+          "target": "/etc/otel-collector.yaml",
+          "readOnly": true
+        }
+      ],
+      "bindings": {
+        "zpages": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http",
+          "targetPort": 55679,
+          "external": true
+        },
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http",
+          "targetPort": 4317,
+          "external": true
+        }
+      }
+    },
+    "jaeger": {
+      "type": "container.v0",
+      "image": "jaegertracing/all-in-one:latest",
+      "bindings": {
+        "tcp": {
+          "scheme": "tcp",
+          "protocol": "tcp",
+          "transport": "tcp",
+          "targetPort": 16686,
           "external": true
         }
       }
