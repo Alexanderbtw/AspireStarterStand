@@ -1,13 +1,14 @@
 {
   "projectPath": ".",
+  "inputPath": "aspirate-output",
   "outputPath": "aspirate-output",
   "containerImageTags": [
     "latest"
   ],
   "containerBuilder": "docker",
+  "kubeContext": "rancher-desktop",
   "outputFormat": "compose",
   "privateRegistryEmail": "aspir8@aka.ms",
-  "includeDashboard": false,
   "secrets": {
     "salt": "tAyksiEQ2QlDaREr",
     "hash": "cIVp6Jn1hdpT8mQVHCJce3HR3e2Uv\u002BBfvC7h5jX9wQo=",
@@ -31,7 +32,8 @@
         "ConnectionStrings__maildev": "tAyksiEQ2QlDaRErqxyKM6bsulmzRmIzAPM9wRqy6vLGxOe\u002BvMwldZgJ1INzzVo="
       },
       "collector": {},
-      "jaeger": {}
+      "jaeger": {},
+      "reactfrontend": {}
     }
   },
   "processAllComponents": true

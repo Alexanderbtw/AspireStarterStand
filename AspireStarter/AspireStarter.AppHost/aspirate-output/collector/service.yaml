@@ -8,6 +8,9 @@ spec:
   selector:
     app: collector
   ports:
-  - name: otlp
+  - name: zpages
+    port: 55679
+    targetPort: 55679
+  - name: http
     port: 4317
     targetPort: 4317

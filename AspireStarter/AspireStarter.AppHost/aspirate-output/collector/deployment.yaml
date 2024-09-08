@@ -22,7 +22,12 @@ spec:
       - name: collector
         image: otel/opentelemetry-collector-contrib:latest
         imagePullPolicy: IfNotPresent
+        args:
+        - --config
+        - /etc/otel-collector.yaml
         ports:
-        - name: otlp
+        - name: zpages
+          containerPort: 55679
+        - name: http
           containerPort: 4317
       terminationGracePeriodSeconds: 180

@@ -18,6 +18,7 @@ code {
 
 .App-logo {
   height: 20vmin;
+  object-fit: scale-down;
   pointer-events: none;
 }
 

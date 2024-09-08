@@ -53,6 +53,17 @@ services:
     - target: 8443
       published: 10003
     restart: unless-stopped
+  reactfrontend:
+    container_name: "reactfrontend"
+    image: "reactfrontend:latest"
+    environment:
+      NODE_ENV: "development"
+      services__apiservice__http__0: "http://apiservice:8080"
+      PORT: "8000"
+    ports:
+    - target: 8000
+      published: 8000
+    restart: unless-stopped
   collector:
     container_name: "collector"
     image: "otel/opentelemetry-collector-contrib:latest"

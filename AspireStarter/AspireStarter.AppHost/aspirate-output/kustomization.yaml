@@ -3,6 +3,7 @@ resources:
 - maildev
 - apiservice
 - webfrontend
+- reactfrontend
 - collector
 - jaeger
 

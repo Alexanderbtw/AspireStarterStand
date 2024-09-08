@@ -120,6 +120,26 @@
         }
       }
     },
+    "reactfrontend": {
+      "type": "dockerfile.v0",
+      "path": "../../ReactFrontend/react-frontend/Dockerfile",
+      "context": "../../ReactFrontend/react-frontend",
+      "env": {
+        "NODE_ENV": "development",
+        "services__apiservice__http__0": "{apiservice.bindings.http.url}",
+        "services__apiservice__https__0": "{apiservice.bindings.https.url}",
+        "PORT": "{reactfrontend.bindings.http.targetPort}"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http",
+          "targetPort": 8000,
+          "external": true
+        }
+      }
+    },
     "collector": {
       "type": "container.v0",
       "image": "otel/opentelemetry-collector-contrib:latest",

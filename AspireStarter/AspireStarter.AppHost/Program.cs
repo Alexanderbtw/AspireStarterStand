@@ -19,13 +19,23 @@ var frontend = builder.AddProject<Projects.AspireStarter_Web>("webfrontend")
     .WithReference(apiService)
     .WithReference(mailDev);
 
-var reactFrontend = builder
-    .AddNpmApp("reactfrontend", "../../ReactFrontend/react-frontend",
-        builder.ExecutionContext.IsRunMode ? "dev" : "start")
+builder.AddNpmApp("reactfrontend", "../../ReactFrontend/react-frontend",
+        builder.ExecutionContext.IsRunMode ? "dev" : "start") // Aspire.Hosting.NodeJs
     .WithReference(apiService)
     .WithHttpEndpoint(env: "PORT")
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
+
+
+
+
+
+
+
+
+
+
+
 
 if (builder.ExecutionContext.IsPublishMode)
 {
@@ -34,6 +44,7 @@ if (builder.ExecutionContext.IsPublishMode)
     var otelCollector = builder
         .AddContainer("collector", "otel/opentelemetry-collector-contrib")
         .WithArgs("--config", "/etc/otel-collector.yaml")
+        // Volumes not working in Aspir8 when generate docker-compose
         .WithBindMount("configs/otel-collector.yaml", "/etc/otel-collector.yaml", isReadOnly: true)
         .WithHttpEndpoint(55679, 55679, name: "zpages") // zpages
         .WithHttpEndpoint(4317, 4317) // gRPC

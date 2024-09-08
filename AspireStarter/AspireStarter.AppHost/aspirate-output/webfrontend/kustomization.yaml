@@ -14,7 +14,7 @@ configMapGenerator:
     - ASPNETCORE_FORWARDEDHEADERS_ENABLED=true
     - HTTP_PORTS=8080
     - services__apiservice__http__0=http://apiservice:8080
-    - OTEL_EXPORTER_OTLP_ENDPOINT=collector:4317
+    - OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4317
     - ASPNETCORE_URLS=http://+:8080;
 
 secretGenerator:

@@ -15,7 +15,7 @@ configMapGenerator:
     - HTTP_PORTS=8080
     - MY_PARAMETER=MyAspirateParameterValue
     - MY_SECRET_PARAMETER=secretParam
-    - OTEL_EXPORTER_OTLP_ENDPOINT=collector:4317
+    - OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4317
     - ASPNETCORE_URLS=http://+:8080;
 
 secretGenerator:
