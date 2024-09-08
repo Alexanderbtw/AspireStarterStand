@@ -1,0 +1,14 @@
+resources:
+- deployment.yaml
+- service.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+- name: reactfrontend-env
+  literals:
+    - NODE_ENV=development
+    - services__apiservice__http__0=http://apiservice:8080
+    - PORT=8000
+

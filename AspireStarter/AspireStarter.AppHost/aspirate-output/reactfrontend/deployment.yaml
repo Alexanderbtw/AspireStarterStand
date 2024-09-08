@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reactfrontend
+  labels:
+    app: reactfrontend
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reactfrontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: reactfrontend
+    spec:
+      containers:
+      - name: reactfrontend
+        image: reactfrontend:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: reactfrontend-env
+      terminationGracePeriodSeconds: 180
