@@ -1,29 +1,41 @@
 @using System.Net.Mail
 @using MailDev.Client.MailKit
+@using MailKit.Net.Smtp
 @using MimeKit
 @inject MailKitClientFactory MailKitFactory
 @rendermode InteractiveServer
 
 <button
-    class="btn @(isSubscribed ? "btn-danger" : "btn-primary")"
-    @onclick="ToggleSubscribe"
->
-    @(isSubscribed ? "Unsubscribe" : "Subscribe")
+    class="btn @(
+               isSubscribed
+                   ? "btn-danger"
+                   : "btn-primary")"
+    @onclick="ToggleSubscribe">
+    @(
+    isSubscribed
+        ? "Unsubscribe"
+        : "Subscribe")
 </button>
 
 @code {
-    private bool isSubscribed = false;
+    private bool isSubscribed;
 
-    private async Task ToggleSubscribe() {
+    private async Task ToggleSubscribe()
+    {
         isSubscribed = !isSubscribed;
-        var smtpClient = await MailKitFactory.GetSmtpClientAsync();
+        ISmtpClient smtpClient = await MailKitFactory.GetSmtpClientAsync();
 
-        using var message = new MailMessage("newsletter@yourcompany.com", "useremail@gmail.com");
-        if (isSubscribed) {
+        using var message = new MailMessage(
+            from: "newsletter@yourcompany.com",
+            to: "useremail@gmail.com");
+
+        if (isSubscribed)
+        {
             message.Subject = "Welcome to our newsletter!";
             message.Body = "Thank you for subscribing to our newsletter!";
         }
-        else {
+        else
+        {
             message.Subject = "You are unsubscribed from our newsletter!";
             message.Body = "Sorry to see you go. We hope you will come back soon!";
         }

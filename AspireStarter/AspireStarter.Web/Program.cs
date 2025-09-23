@@ -1,31 +1,37 @@
 using AspireStarter.Web;
 using AspireStarter.Web.Components;
+
 using MailDev.Client.MailKit;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire components.
 builder.AddServiceDefaults();
 builder.AddRedisOutputCache("cache");
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
+builder
+    .Services
+    .AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddHttpClient<WeatherApiClient>(client =>
 {
     // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
     // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
-    client.BaseAddress = new("https+http://apiservice");
+    client.BaseAddress = new Uri("https+http://apiservice");
 });
 
 builder.AddMailKitClient("maildev");
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    app.UseExceptionHandler(
+        errorHandlingPath: "/Error",
+        createScopeForErrors: true);
+
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -37,7 +43,8 @@ app.UseAntiforgery();
 
 app.UseOutputCache();
 
-app.MapRazorComponents<App>()
+app
+    .MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.MapDefaultEndpoints();

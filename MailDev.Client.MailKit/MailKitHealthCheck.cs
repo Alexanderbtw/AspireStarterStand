@@ -2,7 +2,8 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace MailDev.Client.MailKit;
 
-internal sealed class MailKitHealthCheck(MailKitClientFactory factory) : IHealthCheck
+internal sealed class MailKitHealthCheck(
+    MailKitClientFactory factory) : IHealthCheck
 {
     public async Task<HealthCheckResult> CheckHealthAsync(
         HealthCheckContext context,

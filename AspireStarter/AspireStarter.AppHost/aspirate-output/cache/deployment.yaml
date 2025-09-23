@@ -19,10 +19,10 @@ spec:
         app: cache
     spec:
       containers:
-      - name: cache
-        image: docker.io/library/redis:7.2
-        imagePullPolicy: IfNotPresent
-        ports:
-        - name: tcp
-          containerPort: 6379
+        - name: cache
+          image: docker.io/library/redis:7.2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: tcp
+              containerPort: 6379
       terminationGracePeriodSeconds: 180

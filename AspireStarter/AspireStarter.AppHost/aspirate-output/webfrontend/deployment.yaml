@@ -19,17 +19,17 @@ spec:
         app: webfrontend
     spec:
       containers:
-      - name: webfrontend
-        image: webfrontend:latest
-        imagePullPolicy: IfNotPresent
-        ports:
-        - name: http
-          containerPort: 8080
-        - name: https
-          containerPort: 8443
-        envFrom:
-        - configMapRef:
-            name: webfrontend-env
-        - secretRef:
-            name: webfrontend-secrets
+        - name: webfrontend
+          image: webfrontend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: https
+              containerPort: 8443
+          envFrom:
+            - configMapRef:
+                name: webfrontend-env
+            - secretRef:
+                name: webfrontend-secrets
       terminationGracePeriodSeconds: 180

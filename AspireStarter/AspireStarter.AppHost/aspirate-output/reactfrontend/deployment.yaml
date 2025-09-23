@@ -19,13 +19,13 @@ spec:
         app: reactfrontend
     spec:
       containers:
-      - name: reactfrontend
-        image: reactfrontend:latest
-        imagePullPolicy: IfNotPresent
-        ports:
-        - name: http
-          containerPort: 8000
-        envFrom:
-        - configMapRef:
-            name: reactfrontend-env
+        - name: reactfrontend
+          image: reactfrontend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: reactfrontend-env
       terminationGracePeriodSeconds: 180

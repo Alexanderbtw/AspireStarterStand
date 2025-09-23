@@ -2,13 +2,23 @@ using MailKit.Net.Smtp;
 
 namespace MailDev.Client.MailKit;
 
-public sealed class MailKitClientFactory(MailKitClientSettings settings) : IDisposable
+public sealed class MailKitClientFactory(
+    MailKitClientSettings settings) : IDisposable
 {
-    private readonly SemaphoreSlim _semaphore = new(1, 1);
-
     private SmtpClient? _client;
 
-    public async Task<ISmtpClient> GetSmtpClientAsync(CancellationToken cancellationToken = default)
+    private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(
+        initialCount: 1,
+        maxCount: 1);
+
+    public void Dispose()
+    {
+        _client?.Dispose();
+        _semaphore.Dispose();
+    }
+
+    public async Task<ISmtpClient> GetSmtpClientAsync(
+        CancellationToken cancellationToken = default)
     {
         await _semaphore.WaitAsync(cancellationToken);
 
@@ -18,7 +28,10 @@ public sealed class MailKitClientFactory(MailKitClientSettings settings) : IDisp
             {
                 _client = new SmtpClient();
 
-                await _client.ConnectAsync(settings.Endpoint, cancellationToken)
+                await _client
+                    .ConnectAsync(
+                        uri: settings.Endpoint,
+                        cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
         }
@@ -28,11 +41,5 @@ public sealed class MailKitClientFactory(MailKitClientSettings settings) : IDisp
         }
 
         return _client;
-    }
-
-    public void Dispose()
-    {
-        _client?.Dispose();
-        _semaphore.Dispose();
     }
 }

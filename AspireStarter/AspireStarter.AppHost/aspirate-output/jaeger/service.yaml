@@ -8,6 +8,6 @@ spec:
   selector:
     app: jaeger
   ports:
-  - name: tcp
-    port: 16686
-    targetPort: 16686
+    - name: tcp
+      port: 16686
+      targetPort: 16686

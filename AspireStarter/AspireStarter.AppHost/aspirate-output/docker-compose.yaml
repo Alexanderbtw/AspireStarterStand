@@ -3,17 +3,17 @@ services:
     container_name: "cache"
     image: "docker.io/library/redis:7.2"
     ports:
-    - target: 6379
-      published: 6379
+      - target: 6379
+        published: 6379
     restart: unless-stopped
   maildev:
     container_name: "maildev"
     image: "docker.io/maildev/maildev:2.0.2"
     ports:
-    - target: 1080
-      published: 1080
-    - target: 1025
-      published: 1025
+      - target: 1080
+        published: 1080
+      - target: 1025
+        published: 1025
     restart: unless-stopped
   apiservice:
     container_name: "apiservice"
@@ -29,10 +29,10 @@ services:
       ConnectionStrings__mssql: "mssqlConASp"
       OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4317"
     ports:
-    - target: 8080
-      published: 10000
-    - target: 8443
-      published: 10001
+      - target: 8080
+        published: 10000
+      - target: 8443
+        published: 10001
     restart: unless-stopped
   webfrontend:
     container_name: "webfrontend"
@@ -48,10 +48,10 @@ services:
       ConnectionStrings__maildev: "smtp://maildev:1025"
       OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4317"
     ports:
-    - target: 8080
-      published: 10002
-    - target: 8443
-      published: 10003
+      - target: 8080
+        published: 10002
+      - target: 8443
+        published: 10003
     restart: unless-stopped
   reactfrontend:
     container_name: "reactfrontend"
@@ -61,29 +61,29 @@ services:
       services__apiservice__http__0: "http://apiservice:8080"
       PORT: "8000"
     ports:
-    - target: 8000
-      published: 8000
+      - target: 8000
+        published: 8000
     restart: unless-stopped
   collector:
     container_name: "collector"
     image: "otel/opentelemetry-collector-contrib:latest"
     ports:
-    - target: 55679
-      published: 55679
-    - target: 4317
-      published: 4317
+      - target: 55679
+        published: 55679
+      - target: 4317
+        published: 4317
     volumes:
-    - type: bind
-      source: "../configs/otel-collector.yaml"
-      target: "/etc/otel-collector.yaml"
+      - type: bind
+        source: "../configs/otel-collector.yaml"
+        target: "/etc/otel-collector.yaml"
     command:
-    - "--config"
-    - "/etc/otel-collector.yaml"
+      - "--config"
+      - "/etc/otel-collector.yaml"
     restart: unless-stopped
   jaeger:
     container_name: "jaeger"
     image: "jaegertracing/all-in-one:latest"
     ports:
-    - target: 16686
-      published: 16686
+      - target: 16686
+        published: 16686
     restart: unless-stopped

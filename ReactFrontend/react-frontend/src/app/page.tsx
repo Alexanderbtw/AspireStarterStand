@@ -10,7 +10,7 @@ export default function Home() {
     <div className="App">
       <header className="App-header">
         <Image
-          src={logoRepl}
+          src={logo}
           className="App-logo"
           alt="logo"
         />

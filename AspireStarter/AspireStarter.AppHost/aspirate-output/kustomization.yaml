@@ -1,11 +1,11 @@
 resources:
-- cache
-- maildev
-- apiservice
-- webfrontend
-- reactfrontend
-- collector
-- jaeger
+  - cache
+  - maildev
+  - apiservice
+  - webfrontend
+  - reactfrontend
+  - collector
+  - jaeger
 
 generatorOptions:
   disableNameSuffixHash: true

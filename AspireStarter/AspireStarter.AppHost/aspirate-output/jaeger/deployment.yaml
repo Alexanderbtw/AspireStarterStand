@@ -19,10 +19,10 @@ spec:
         app: jaeger
     spec:
       containers:
-      - name: jaeger
-        image: jaegertracing/all-in-one:latest
-        imagePullPolicy: IfNotPresent
-        ports:
-        - name: tcp
-          containerPort: 16686
+        - name: jaeger
+          image: jaegertracing/all-in-one:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: tcp
+              containerPort: 16686
       terminationGracePeriodSeconds: 180
