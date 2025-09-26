@@ -16,7 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{C3A8B2
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		.editorconfig = .editorconfig
+		.env = .env
 		AGENTS.md = AGENTS.md
+		aspire-install.sh = aspire-install.sh
+		docker-compose.yaml = docker-compose.yaml
 	EndProjectSection
 EndProject
 Global

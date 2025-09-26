@@ -44,6 +44,8 @@ builder
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
 
+builder.AddDockerComposeEnvironment("compose");
+
 if (builder.ExecutionContext.IsPublishMode)
 {
     // TODO: ELK Stack
